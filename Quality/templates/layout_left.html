@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your App{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <div class="wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+                <h3>Quality Manager</h3>
+            </div>
+            <ul class="nav flex-column" id="sidebarMenu">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.home') }}" id="homeLink">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#aboutSubmenu" data-toggle="collapse" aria-expanded="false">About</a>
+                    <ul class="collapse list-unstyled" id="aboutSubmenu">
+                        <li>
+                            <a class="nav-link" href="#">Submenu 1</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 2</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#contactSubmenu" data-toggle="collapse" aria-expanded="false">Contact</a>
+                    <ul class="collapse list-unstyled" id="contactSubmenu">
+                        <li>
+                            <a class="nav-link" href="#">Submenu 1</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 2</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 3</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#accountSubmenu" data-toggle="collapse" aria-expanded="false">Account</a>
+                    <ul class="collapse list-unstyled" id="accountSubmenu">
+                        <li>
+                            <a class="nav-link" href="#">Submenu 1</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 2</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Logout</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#authSubmenu" data-toggle="collapse" aria-expanded="false">Auth</a>
+                    <ul class="collapse list-unstyled" id="authSubmenu">
+                        <li>
+                            <a class="nav-link" href="#">Login</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Register</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 3</a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        $(document).ready(function() {
+            $('.nav-link.dropdown-toggle').on('click', function() {
+                var submenuId = $(this).attr('href');
+                console.log('Toggling submenu: ' + submenuId);
+                $('.collapse').collapse('hide');
+                $(submenuId).collapse('toggle');
+                $('.nav-link').removeClass('active-link');
+                $(this).addClass('active-link');
+            });
+            $('#homeLink').on('click', function() {
+                console.log('Home link clicked');
+                $('.nav-link').removeClass('active-link');
+                $(this).addClass('active-link');
+            });
+        });
+    </script>
+</body>
+</html>

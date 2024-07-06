@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Your App{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='main.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="qualityDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Qualité
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="qualityDropdown">
+                            <a class="dropdown-item" href="#">Gestion NC</a>
+                            <a class="dropdown-item" href="#">Plan Action</a>
+                            <a class="dropdown-item" href="#" id="toggleLeftMenu">Documentation</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="securityDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Sécurité
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="securityDropdown">
+                            <a class="dropdown-item" href="#">Process</a>
+                            <a class="dropdown-item" href="#">Description</a>
+                            <a class="dropdown-item" href="#">Document</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="stockDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Stock
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="stockDropdown">
+                            <a class="dropdown-item" href="#">Process</a>
+                            <a class="dropdown-item" href="#">Description</a>
+                            <a class="dropdown-item" href="#">Document</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <nav class="sidebar" id="leftSidebar">
+            <div class="sidebar-header">
+                <h3>Left Sidebar</h3>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#aboutSubmenu" data-toggle="collapse" aria-expanded="false">Processus 1</a>
+                    <ul class="collapse list-unstyled" id="aboutSubmenu">
+                        <li>
+                            <a class="nav-link" href="#">Submenu 1</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 2</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" href="#aboutSubmenu2" data-toggle="collapse" aria-expanded="false">Processus 2</a>
+                    <ul class="collapse list-unstyled" id="aboutSubmenu2">
+                        <li>
+                            <a class="nav-link" href="#">Submenu 4</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 5</a>
+                        </li>
+                        <li>
+                            <a class="nav-link" href="#">Submenu 6</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        $(document).ready(function() {
+            $('#toggleLeftMenu').on('click', function(e) {
+                e.preventDefault();
+                $('#leftSidebar').toggleClass('active');
+            });
+
+            // Close left sidebar if clicked outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('#leftSidebar').length && !$(e.target).is('#toggleLeftMenu')) {
+                    $('#leftSidebar').removeClass('active');
+                }
+            });
+
+            // Prevent closing on clicks inside sidebar
+            $('#leftSidebar').on('click', function(e) {
+                e.stopPropagation();
+            });
+
+
+            $('.nav-link.dropdown-toggle').on('click', function() {
+                var submenuId = $(this).attr('href');
+                console.log('Toggling submenu: ' + submenuId);
+                $('.collapse').collapse('hide');
+                $(submenuId).collapse('toggle');
+                $('.nav-link').removeClass('active-link');
+                $(this).addClass('active-link');
+            });
+            $('#homeLink').on('click', function() {
+                console.log('Home link clicked');
+                $('.nav-link').removeClass('active-link');
+                $(this).addClass('active-link');
+            });
+
+        });
+    </script>
+</body>
+</html>

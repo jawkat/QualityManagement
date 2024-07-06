@@ -17,6 +17,6 @@ def logout():
     return "<h1>Logout</h1>"
 
 @auth.route('/sign-up')
-def signup():
+def register():
     """Route to display signup page."""
-    return "<h1>Signup</h1>"
+    return "<h1>Register</h1>"

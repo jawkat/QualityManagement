@@ -15,3 +15,5 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     return app
+
+
